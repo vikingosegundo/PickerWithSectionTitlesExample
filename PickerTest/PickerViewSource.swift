@@ -102,8 +102,8 @@ class AlternativePickerViewSource: BasePickerViewSource {
         
         if let selectable = data[row]["selectable"] as? Bool, selectable == true {
             let element = data[row]
-            selected?(element)
             selectedElement = element
+            selected?(element)
         }
        
     }
