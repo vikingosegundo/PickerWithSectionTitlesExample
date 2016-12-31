@@ -8,18 +8,49 @@
 
 import UIKit
 
+class BaseView: UIView {
+    var label: UILabel = UILabel()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.addSubview(label)
+        label.frame = self.bounds
+    }
+}
+
+class GroupView: BaseView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        label.backgroundColor = .orange
+    }
+    
+}
+
+class ItemView: BaseView {
+
+}
+
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    var pickerViewSource: BasePickerViewSource?
+    
+    @IBOutlet weak var pickerView: UIPickerView! {
+        didSet{
+            let pickerViewSource = AlternativePickerViewSource(pickerView: pickerView)
+            
+            pickerViewSource.selected = {
+                selected in
+                print("selected: \(selected)")
+            }
+            
+            pickerViewSource.deselected = {
+                deselected in
+                print("deselected: \(deselected)")
+            }
+            
+            self.pickerViewSource = pickerViewSource
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
